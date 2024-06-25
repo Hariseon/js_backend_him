@@ -1,5 +1,5 @@
-const express = require('express')
-const {MongoClient, ObjectId} = require('mongodb')
+const express = require('express');
+const {MongoClient, ObjectId} = require('mongodb');
 
 
 const app = express();
@@ -31,7 +31,7 @@ app.post('/tasks', async function(req, res) {
     const task = {...req.body, done: false};
     const collection = await getDbCollection('mongodb://127.0.0.1', 'todoapp', 'tasks');
     await collection.insertOne(task);
-    res.send('Task added successfully');
+    res.send(task);
 });
 
 app.patch('/tasks/:id', async function(req, res) {
@@ -43,7 +43,7 @@ app.patch('/tasks/:id', async function(req, res) {
 app.delete('/tasks/:id', async function(req, res) {
 	const collection = await getDbCollection('mongodb://127.0.0.1', 'todoapp', 'tasks');
 	await collection.deleteOne({_id: new ObjectId(req.params.id)});
-	res.send({});
+	res.send('Task delete successfully');
 });
 
 app.listen(port, function() {
